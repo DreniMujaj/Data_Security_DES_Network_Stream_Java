@@ -48,4 +48,29 @@ public class Client {
 		  return originkey;
 		 
     }
+	
+    public static void gen_key() throws NoSuchAlgorithmException{
+    KeyGenerator kg=KeyGenerator.getInstance("DES");
+    Key k=kg.generateKey();
+    String encodedKey=Base64.getEncoder().encodeToString(k.getEncoded());
+  try {
+     FileWriter myWriter = new FileWriter("C:\\Users\\mujaj\\OneDrive\\Desktop\\key.txt");
+     myWriter.write(encodedKey);
+
+     myWriter.close();
+     System.out.println("Successfully wrote  key to the file.");
+   } catch (IOException e) {
+     System.out.println("An error occurred.");
+     e.printStackTrace();
+   }   
+
+}
+ public static byte [] encrypt(String plain,Key k ) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException
+    {        
+        Cipher cipher = Cipher.getInstance("DES"); 
+       cipher.init(Cipher.ENCRYPT_MODE, k); 
+        byte[] data = plain.getBytes(); 
+       byte[] result = cipher.doFinal(data); 
+      return result;
+    } 
 }
